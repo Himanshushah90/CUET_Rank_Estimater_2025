@@ -30,7 +30,11 @@ SECRET_KEY = env('SECRET_KEY', default='django-insecure-_v#4+s6-p9v$e*l^tu$y%!r8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'cuet-rank-estimater-2025.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
