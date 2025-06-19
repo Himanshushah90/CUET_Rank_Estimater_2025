@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CUET Cutoff Estimator - Submit Scores</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f8fafc; }
+        .form-container { max-width: 700px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 2rem; }
+        label { font-weight: bold; }
+        select, input[type="number"] { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border-radius: 4px; border: 1px solid #ccc; }
+        .btn { background: #2563eb; color: #fff; padding: 0.5rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background: #1d4ed8; }
+        .error-text { color: #dc2626; margin-bottom: 1rem; }
+        .subject-row { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+        .subject-row select, .subject-row input { flex: 1; }
+        .remove-btn { background: #dc2626; color: #fff; border: none; border-radius: 4px; padding: 0.3rem 0.7rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>CUET Cutoff Estimator</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="category">Category:</label>
+                <select name="category" id="category" required>
+                    {% for val, label in category_choices %}
+                        <option value="{{ val }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <input type="checkbox" name="include_general_test" id="include_general_test">
+                <label for="include_general_test">Include General Test</label>
+                <input type="number" name="general_test_score" id="general_test_score" placeholder="General Test Marks" min="0" max="250" style="display:none;">
+            </div>
+            <div id="subjects-container"></div>
+            <button type="button" class="btn" id="add-subject-btn">Add Subject</button>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <div style="margin-top:2rem; text-align:center;">
+            <a href="{% url 'view_rankings' %}" class="btn">Check Your Rank</a>
+        </div>
+    </div>
+    <script>
+        // subjectChoices is a JS array of [value, label] pairs, passed from the view as JSON
+        let subjectChoices = {{ subject_choices|safe }};
+
+        function getSelectedSubjects() {
+            return Array.from(document.querySelectorAll('.subject-row select')).map(s => s.value);
+        }
+
+        function addSubjectRow() {
+            const container = document.getElementById('subjects-container');
+            const row = document.createElement('div');
+            row.className = 'subject-row';
+
+            // Subject dropdown
+            const select = document.createElement('select');
+            select.name = 'subject';
+            // Prevent duplicates
+            const selectedSubjects = getSelectedSubjects();
+            subjectChoices.forEach(([val, label]) => {
+                if (!selectedSubjects.includes(val)) {
+                    const option = document.createElement('option');
+                    option.value = val;
+                    option.text = label;
+                    select.appendChild(option);
+                }
+            });
+
+            // Marks input
+            const marks = document.createElement('input');
+            marks.type = 'number';
+            marks.name = 'marks';
+            marks.placeholder = 'Marks';
+            marks.min = 0;
+            marks.max = 250;
+            marks.required = true;
+
+            // Remove button
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerText = 'Remove';
+            removeBtn.onclick = () => row.remove();
+
+            row.appendChild(select);
+            row.appendChild(marks);
+            row.appendChild(removeBtn);
+            container.appendChild(row);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('add-subject-btn').onclick = addSubjectRow;
+            addSubjectRow();
+
+            document.getElementById('include_general_test').addEventListener('change', function() {
+                document.getElementById('general_test_score').style.display = this.checked ? 'inline-block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

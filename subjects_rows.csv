@@ -1,0 +1,40 @@
+subject_name,list_type,is_specific
+Accountancy / Book Keeping,B,true
+Agriculture,B,true
+Anthropology,B,true
+Assamese,A,true
+Bengali,A,true
+Biology/ Biological Studies/ Biotechnology /Biochemistry,B,true
+Business Studies,B,true
+Chemistry,B,true
+Computer Science / Information Practices,B,true
+Economics / Business Economics,B,true
+English,A,true
+Environmental Science,B,true
+Fine Arts/Visual Arts/Commercial Arts,B,true
+General Aptitude Test,TEST,false
+Geography / Geology,B,true
+Gujarati,A,true
+Hindi,A,true
+History,B,true
+Home Science,B,true
+Kannada,A,true
+Knowledge Tradition-Practices in India,B,true
+Malayalam,A,true
+Marathi,A,true
+Mass Media / Mass Communication,B,true
+Mathematics / Applied Mathematics,B,true
+Odia,A,true
+Performance-Based Test,TEST,false
+"Performing Arts - (Dance, Drama and Music)",B,true
+"Physical Education (Yoga, Sports)",B,true
+Physics,B,true
+Political Science,B,true
+Practical-Based Test,TEST,false
+Psychology,B,true
+Punjabi,A,true
+Sanskrit,A,true
+Sociology,B,true
+Tamil,A,true
+Telugu,A,true
+Urdu,A,true

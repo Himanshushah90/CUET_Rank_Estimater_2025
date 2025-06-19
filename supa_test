@@ -1,0 +1,19 @@
+import os
+import environ
+from supabase import create_client
+
+# Load environment variables
+env = environ.Env()
+environ.Env.read_env()
+
+SUPABASE_URL = env('SUPABASE_URL')
+SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkZW9wb3RucHV1cGlzd3h1Z2xjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MDM0NTExMCwiZXhwIjoyMDY1OTIxMTEwfQ.sX0jfSRULcVEp7xJxScPi5v1oW8ad1gDRl-FiFMH-IA'  # Use service_role key
+# supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+try:
+    supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+    # Test a simple query
+    response = supabase.table('subjects').select('*').limit(1).execute()
+    print("Connection successful:", response.data)
+except Exception as e:
+    print("Error:", str(e))

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submission Successful</title>
+    <style>
+        body { background: #f8fafc; font-family: Arial, sans-serif; }
+        .glass { background: #fff; border-radius: 15px; padding: 20px; max-width: 600px; margin: 50px auto; box-shadow: 0 2px 8px #0001; }
+        h2 { color: #222; }
+        .id-box { background: #f0f0f0; padding: 10px; border-radius: 5px; margin: 10px 0; color: #222; font-size: 1.2em; word-break: break-all; }
+        a { color: #2563eb; text-decoration: none; display: inline-block; padding: 10px 20px; background: #e0e7ff; border-radius: 5px; margin-top: 20px; }
+        a:hover { background: #c7d2fe; }
+        .disclaimer { font-size: 0.8em; color: #888; margin-top: 20px; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="glass">
+        <h2>Submission Successful!</h2>
+        <p>Your unique ID is:</p>
+        <div class="id-box">{{ unique_id }}</div>
+        <p>Use this ID to view your rankings.</p>
+        <a href="{% url 'view_rankings' %}">View Rankings</a>
+        <div class="disclaimer">
+            Disclaimer: These rankings are estimates based on crowdsourced data and may not reflect official DU cutoffs.
+        </div>
+    </div>
+</body>
+</html>

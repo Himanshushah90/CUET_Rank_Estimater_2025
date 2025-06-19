@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your CUET Rankings</title>
+    <style>
+        body { background: #f8fafc; font-family: Arial, sans-serif; }
+        .glass { background: #fff; border-radius: 15px; padding: 20px; max-width: 900px; margin: 50px auto; box-shadow: 0 2px 8px #0001; }
+        .form-group { margin-bottom: 15px; }
+        label { color: #222; display: block; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #f0f0f0; color: #222; }
+        button { background: #2563eb; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #1d4ed8; }
+        h2, h3, p { color: #222; }
+        table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+        th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: center; }
+        th { background: #222; color: #fff; }
+        .error-text { color: #dc2626; margin-bottom: 1rem; }
+        .disclaimer { color: #888; font-size: 0.8em; margin-top: 20px; text-align: center; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="glass">
+        <h2>Your CUET Rankings</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="unique_id">Enter your unique ID:</label>
+                <input type="text" name="unique_id" id="unique_id" required value="{{ unique_id|default:'' }}">
+            </div>
+            <button type="submit">View Rankings</button>
+        </form>
+        {% if error %}
+            <div class="error-text">{{ error }}</div>
+        {% endif %}
+        {% if results %}
+            <table>
+                <tr>
+                    <th>Course</th>
+                    <th>Best Combination Used</th>
+                    <th>Subjects Used</th>
+                    <th>Your Merit Score</th>
+                    <th>Your Category Rank</th>
+                    <th>Your General Rank</th>
+                    <th>Total Submissions</th>
+                </tr>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.course }}</td>
+                    <td>{{ row.combination }}</td>
+                    <td>{{ row.subjects|join:", " }}</td>
+                    <td>{{ row.score }}</td>
+                    <td>{{ row.category_rank }}</td>
+                    <td>{{ row.general_rank }}</td>
+                    <td>{{ row.total }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        {% if user_category %}
+            <p><strong>Your Category:</strong> {{ user_category }}</p>
+        {% endif %}
+        <div class="disclaimer">
+            Disclaimer: These rankings are estimates based on crowdsourced data and may not reflect official DU cutoffs.
+        </div>
+        <div style="margin-top: 2rem;">
+            <a href="{% url 'submit_scores' %}">Submit New Scores</a>
+        </div>
+    </div>
+</body>
+</html>
