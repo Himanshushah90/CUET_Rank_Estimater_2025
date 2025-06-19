@@ -1,0 +1,1 @@
+web: gunicorn cuet_estimator.wsgi
